@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="./index.css">
+    <title>Rock, Paper, Sissor Game</title>
+</head>
+<body>
+    <section class="container max-w-5xl mx-auto py-12">
+        <h1 class="text-center text-5xl mt-12 font-bold">Let's Play !!!</h1>
+        <div class="grid grid-cols-5 mt-12 ">
+            <div class="text-center">
+                <div class="relative">
+                    <p class="text-2xl font-light">Your Score</p>
+                    <p id="userScore" class="text-5xl font-bold mt-3">0</p>
+                    <div id="userFirework" class="firework hidden"></div>
+                </div>
+                <div class="mt-4">
+                    <button disabled class="gameControls userControls disabled:opacity-30 disabled:pointer-events-none mb-5 w-full p-6 border-2 border-grey-200 hover:border-green-600 rounded-3xl transition-all duration-200 hover:shadow-lg active:bg-green-200">
+                        <img src="./assets/rock.svg" alt="" class="mx-auto w-16">
+                        <p class="pt-1 text-3xl font-thin">Rock</p>
+                    </button>
+                    <button disabled class="gameControls userControls disabled:opacity-30 disabled:pointer-events-none mb-5 w-full p-6 border-2 border-grey-200 hover:border-green-600 rounded-3xl transition-all duration-200 hover:shadow-lg active:bg-green-200">
+                        <img src="./assets/paper.svg" alt="" class="mx-auto w-16">
+                        <p class="pt-1 text-3xl font-thin">Paper</p>
+                    </button>
+                    <button disabled class="gameControls userControls disabled:opacity-30 disabled:pointer-events-none mb-5 w-full p-6 border-2 border-grey-200 hover:border-green-600 rounded-3xl transition-all duration-200 hover:shadow-lg active:bg-green-200">
+                        <img src="./assets/scissors.svg" alt="" class="mx-auto w-16">
+                        <p class="pt-1 text-3xl font-thin">Sissor</p>
+                    </button>
+                </div>
+            </div>
+            <div class="col-span-3 flex items-center">
+                <div class="w-full text-center px-10">
+                    <p id="roundID" class="text-xl uppercase font-bold mb-6 hidden">Round - <span>1</span></p>
+                    <p id="countDown" class="text-5xl mb-4 hidden">3</p>
+                    <div id="roundSelectContainer">
+                        <label for="roundsSelect">Choose Rounds</label>
+                        <select name="" id="roundsSelect" class="mt-2 mb-6 w-full border-4 rounded-2xl p-4 text-center text-lg max-w-xs flex mx-auto">
+                            <option value="">-- Choose One --</option>
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                        </select>
+                    </div>
+                    <button id="playButton" class="flext bg-green-600 text-white mx-auto rounded-lg px-10 py-3 text-2xl font-semibold hover:bg-green-700 active:bg-green-900 transition-all duration-200 hover:shadow-lg">Start</button>
+                    <button id="nextRoundButton" class="flext bg-green-600 text-white mx-auto rounded-lg px-10 py-3 text-2xl font-semibold hover:bg-green-700 active:bg-green-900 transition-all duration-200 hover:shadow-lg hidden">Play</button>
+                    <button id="initButton" class="flext bg-green-600 text-white mx-auto rounded-lg px-10 py-3 text-2xl font-semibold hover:bg-green-700 active:bg-green-900 transition-all duration-200 hover:shadow-lg hidden">play Again</button>
+                    <p id="errorMessage" class="text-red-600 text-center mt-4"></p>
+                </div>
+            </div>
+            <div class="text-center">
+                <div>
+                    <p class="text-2xl font-light">Computer's Score</p>
+                    <p id="computerScore" class="text-5xl font-bold mt-3">0</p>
+                    <div id="computerFirework" class="firework hidden"></div>
+                </div>
+                <div class="mt-4">
+                    <button disabled class="gameControls computerControls disabled:opacity-30 disabled:pointer-events-none mb-5 w-full p-6 border-2 border-grey-200 hover:border-green-600 rounded-3xl transition-all duration-200 hover:shadow-lg active:bg-green-200">
+                        <img src="./assets/rock.svg" alt="" class="mx-auto w-16">
+                        <p class="pt-1 text-3xl font-thin">Rock</p>
+                    </button>
+                    <button disabled class="gameControls computerControls disabled:opacity-30 disabled:pointer-events-none mb-5 w-full p-6 border-2 border-grey-200 hover:border-green-600 rounded-3xl transition-all duration-200 hover:shadow-lg active:bg-green-200">
+                        <img src="./assets/paper.svg" alt="" class="mx-auto w-16">
+                        <p class="pt-1 text-3xl font-thin">Paper</p>
+                    </button>
+                    <button disabled class="gameControls computerControls disabled:opacity-30 disabled:pointer-events-none mb-5 w-full p-6 border-2 border-grey-200 hover:border-green-600 rounded-3xl transition-all duration-200 hover:shadow-lg active:bg-green-200">
+                        <img src="./assets/scissors.svg" alt="" class="mx-auto w-16">
+                        <p class="pt-1 text-3xl font-thin">Sissor</p>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="flex justify-between">
+            <button class="p-1 px-3 text-sm font-semibold rounded-3xl shadow-sm bg-gradient-to-r from-indigo-100 via-purple-100 to-pink-100 border border-opacity-10 hover:shadow-lg cursor-pointer transition-all duration-200">Reset Game</button>
+            <button class="p-1 px-3 text-sm font-semibold rounded-3xl shadow-sm bg-gradient-to-r from-indigo-100 via-purple-100 to-pink-100 border border-opacity-10 hover:shadow-lg cursor-pointer transition-all duration-200">How to Play</button>
+            <div id="popup" class="fixed w-full h-screen bg-black/50 top-0 left-0 flex items-center justify-center hidden">
+                <div class="max-2-3xl p-10 rounded-3xl shadow-md bg-white relative">
+                    <button id="closeButton" class="absolute top-5 right-5 text-gray-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                        </svg>                      
+                    </button>
+                    <div class="my-2">
+                        <table>
+                            <tr>
+                                <td class="w-16 py-2 align-top font-semibold">Step 1:</td>
+                                <td class="py-2 text-gray-800">Choose no of rounds in the dropdown</td>
+                            </tr>
+                            <tr>
+                                <td class="w-16 py-2 align-top font-semibold">Step 2:</td>
+                                <td class="py-2 text-gray-800">Click Start</td>
+                            </tr>
+                            <tr>
+                                <td class="w-16 py-2 align-top font-semibold">Step 3:</td>
+                                <td class="py-2 text-gray-800">For each round there will be a 3 second countdown. Once countdown turns <b>'GO'</b> choose your option (Rock/Paper/Sissor) </td>
+                            </tr>
+                            <tr>
+                                <td class="w-16 py-2 align-top font-semibold">Step 4:</td>
+                                <td class="py-2 text-gray-800">Click next round to play next round</td>
+                            </tr>
+                        </table>
+                        <table class="max-auto mt-8">
+                            <tr>
+                                <td class="border border-slate-200 px-20 py-4">
+                                    <div class="flex gap-3">
+                                        <img src="./assets/rock.svg" alt="" class="mx-auto w-6">
+                                        <span>vs</span>
+                                        <img src="./assets/scissors.svg" alt="" class="mx-auto w-6">
+                                    </div>
+                                </td>
+                                <td class="border border-slate-200 px-20 py-4">
+                                    <div class="flex gap-3">
+                                        <img src="./assets/rock.svg" alt="" class="mx-auto w-6">
+                                        <span>wins</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="border border-slate-200 px-20 py-4">
+                                    <div class="flex gap-3">
+                                        <img src="./assets/paper.svg" alt="" class="mx-auto w-6">
+                                        <span>vs</span>
+                                        <img src="./assets/scissors.svg" alt="" class="mx-auto w-6">
+                                    </div>
+                                </td>
+                                <td class="border border-slate-200 px-20 py-4">
+                                    <div class="flex gap-3">
+                                        <img src="./assets/scissors.svg" alt="" class="mx-auto w-6">
+                                        <span>wins</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="border border-slate-200 px-20 py-4">
+                                    <div class="flex gap-3">
+                                        <img src="./assets/paper.svg" alt="" class="mx-auto w-6">
+                                        <span>vs</span>
+                                        <img src="./assets/rock.svg" alt="" class="mx-auto w-6">
+                                    </div>
+                                </td>
+                                <td class="border border-slate-200 px-20 py-4">
+                                    <div class="flex gap-3">
+                                        <img src="./assets/paper.svg" alt="" class="mx-auto w-6">
+                                        <span>wins</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="./index.js"></script>
+</body>
+</html>
