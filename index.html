@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/tailwindcss-animated@1.1.2/src/index.min.js"></script> -->
     <link rel="stylesheet" href="./index.css">
     <title>Rock, Paper, Sissor Game</title>
 </head>
@@ -18,15 +19,15 @@
                     <div id="userFirework" class="firework hidden"></div>
                 </div>
                 <div class="mt-4">
-                    <button disabled class="gameControls userControls disabled:opacity-30 disabled:pointer-events-none mb-5 w-full p-6 border-2 border-grey-200 hover:border-green-600 rounded-3xl transition-all duration-200 hover:shadow-lg active:bg-green-200">
+                    <button disabled class="gameControls userControls disabled:opacity-30 disabled:pointer-events-none mb-5 w-full p-6 border-2 border-grey-200 hover:border-green-600 rounded-3xl transition-all duration-200 hover:shadow-lg active:bg-green-200" onclick="select(1)">
                         <img src="./assets/rock.svg" alt="" class="mx-auto w-16">
                         <p class="pt-1 text-3xl font-thin">Rock</p>
                     </button>
-                    <button disabled class="gameControls userControls disabled:opacity-30 disabled:pointer-events-none mb-5 w-full p-6 border-2 border-grey-200 hover:border-green-600 rounded-3xl transition-all duration-200 hover:shadow-lg active:bg-green-200">
+                    <button disabled class="gameControls userControls disabled:opacity-30 disabled:pointer-events-none mb-5 w-full p-6 border-2 border-grey-200 hover:border-green-600 rounded-3xl transition-all duration-200 hover:shadow-lg active:bg-green-200" onclick="select(2)">
                         <img src="./assets/paper.svg" alt="" class="mx-auto w-16">
                         <p class="pt-1 text-3xl font-thin">Paper</p>
                     </button>
-                    <button disabled class="gameControls userControls disabled:opacity-30 disabled:pointer-events-none mb-5 w-full p-6 border-2 border-grey-200 hover:border-green-600 rounded-3xl transition-all duration-200 hover:shadow-lg active:bg-green-200">
+                    <button disabled class="gameControls userControls disabled:opacity-30 disabled:pointer-events-none mb-5 w-full p-6 border-2 border-grey-200 hover:border-green-600 rounded-3xl transition-all duration-200 hover:shadow-lg active:bg-green-200" onclick="select(3)">
                         <img src="./assets/scissors.svg" alt="" class="mx-auto w-16">
                         <p class="pt-1 text-3xl font-thin">Sissor</p>
                     </button>
@@ -35,7 +36,7 @@
             <div class="col-span-3 flex items-center">
                 <div class="w-full text-center px-10">
                     <p id="roundID" class="text-xl uppercase font-bold mb-6 hidden">Round - <span>1</span></p>
-                    <p id="countDown" class="text-5xl mb-4 hidden">3</p>
+                    <p id="countDown" class="text-5xl mb-4 hidden">4</p>
                     <div id="roundSelectContainer">
                         <label for="roundsSelect">Choose Rounds</label>
                         <select name="" id="roundsSelect" class="mt-2 mb-6 w-full border-4 rounded-2xl p-4 text-center text-lg max-w-xs flex mx-auto">
@@ -45,9 +46,9 @@
                             <option value="15">15</option>
                         </select>
                     </div>
-                    <button id="playButton" class="flext bg-green-600 text-white mx-auto rounded-lg px-10 py-3 text-2xl font-semibold hover:bg-green-700 active:bg-green-900 transition-all duration-200 hover:shadow-lg">Start</button>
+                    <button id="playButton" class="flext bg-green-600 text-white mx-auto rounded-lg px-10 py-3 text-2xl font-semibold hover:bg-green-700 active:bg-green-900 transition-all duration-200 hover:shadow-lg" onclick="startGame()">Start</button>
                     <button id="nextRoundButton" class="flext bg-green-600 text-white mx-auto rounded-lg px-10 py-3 text-2xl font-semibold hover:bg-green-700 active:bg-green-900 transition-all duration-200 hover:shadow-lg hidden">Play</button>
-                    <button id="initButton" class="flext bg-green-600 text-white mx-auto rounded-lg px-10 py-3 text-2xl font-semibold hover:bg-green-700 active:bg-green-900 transition-all duration-200 hover:shadow-lg hidden">play Again</button>
+                    <button id="initButton" class="flext bg-green-600 text-white mx-auto rounded-lg px-10 py-3 text-2xl font-semibold hover:bg-green-700 active:bg-green-900 transition-all duration-200 hover:shadow-lg hidden" onclick="init()">play Again</button>
                     <p id="errorMessage" class="text-red-600 text-center mt-4"></p>
                 </div>
             </div>
@@ -58,15 +59,15 @@
                     <div id="computerFirework" class="firework hidden"></div>
                 </div>
                 <div class="mt-4">
-                    <button disabled class="gameControls computerControls disabled:opacity-30 disabled:pointer-events-none mb-5 w-full p-6 border-2 border-grey-200 hover:border-green-600 rounded-3xl transition-all duration-200 hover:shadow-lg active:bg-green-200">
+                    <button disabled class="gameControls computerControls disabled:opacity-30 disabled:pointer-events-none mb-5 w-full p-6 border-2 border-grey-200 rounded-3xl">
                         <img src="./assets/rock.svg" alt="" class="mx-auto w-16">
                         <p class="pt-1 text-3xl font-thin">Rock</p>
                     </button>
-                    <button disabled class="gameControls computerControls disabled:opacity-30 disabled:pointer-events-none mb-5 w-full p-6 border-2 border-grey-200 hover:border-green-600 rounded-3xl transition-all duration-200 hover:shadow-lg active:bg-green-200">
+                    <button disabled class="gameControls computerControls disabled:opacity-30 disabled:pointer-events-none mb-5 w-full p-6 border-2 border-grey-200 rounded-3xl">
                         <img src="./assets/paper.svg" alt="" class="mx-auto w-16">
                         <p class="pt-1 text-3xl font-thin">Paper</p>
                     </button>
-                    <button disabled class="gameControls computerControls disabled:opacity-30 disabled:pointer-events-none mb-5 w-full p-6 border-2 border-grey-200 hover:border-green-600 rounded-3xl transition-all duration-200 hover:shadow-lg active:bg-green-200">
+                    <button disabled class="gameControls computerControls disabled:opacity-30 disabled:pointer-events-none mb-5 w-full p-6 border-2 border-grey-200 rounded-3xl">
                         <img src="./assets/scissors.svg" alt="" class="mx-auto w-16">
                         <p class="pt-1 text-3xl font-thin">Sissor</p>
                     </button>
@@ -74,11 +75,11 @@
             </div>
         </div>
         <div class="flex justify-between">
-            <button class="p-1 px-3 text-sm font-semibold rounded-3xl shadow-sm bg-gradient-to-r from-indigo-100 via-purple-100 to-pink-100 border border-opacity-10 hover:shadow-lg cursor-pointer transition-all duration-200">Reset Game</button>
-            <button class="p-1 px-3 text-sm font-semibold rounded-3xl shadow-sm bg-gradient-to-r from-indigo-100 via-purple-100 to-pink-100 border border-opacity-10 hover:shadow-lg cursor-pointer transition-all duration-200">How to Play</button>
+            <button class="p-1 px-3 text-sm font-semibold rounded-3xl shadow-sm bg-gradient-to-r from-indigo-100 via-purple-100 to-pink-100 border border-opacity-10 hover:shadow-lg cursor-pointer transition-all duration-200" onclick="init()">Reset Game</button>
+            <button class="p-1 px-3 text-sm font-semibold rounded-3xl shadow-sm bg-gradient-to-r from-indigo-100 via-purple-100 to-pink-100 border border-opacity-10 hover:shadow-lg cursor-pointer transition-all duration-200" onclick="openPopup()">How to Play</button>
             <div id="popup" class="fixed w-full h-screen bg-black/50 top-0 left-0 flex items-center justify-center hidden">
                 <div class="max-2-3xl p-10 rounded-3xl shadow-md bg-white relative">
-                    <button id="closeButton" class="absolute top-5 right-5 text-gray-600">
+                    <button id="closeButton" class="absolute top-5 right-5 text-gray-600" onclick="closePopup()">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="size-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                         </svg>                      
