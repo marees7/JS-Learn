@@ -59,8 +59,20 @@ function startGame() {
     show([countDown, roundID])
 
     currentRound = 1
+    resetCountDown()
+    triggerCountDown()
+}
+
+function resetCountDown() {
     countDown.innerText = "4"
     addClasses([countDown], ['animate-[bounce_1s_ease-in-out_infinite]'])
+}
+
+function nextRound() {
+    hide([nextRoundButton])
+    show([countDown])
+
+    resetCountDown()
     triggerCountDown()
 }
 
@@ -85,7 +97,7 @@ function select(userInput) {
     if (userInput === computerInput) {
         countDown.innerText = 'Match Draw !!!'
     } else if (
-        (userInput == 1 && computerInput === 3) ||
+        (userInput === 1 && computerInput === 3) ||
         (userInput === 2 && computerInput === 1) || 
         (userInput === 3 && computerInput === 2)
     ){
@@ -98,6 +110,30 @@ function select(userInput) {
         hide([computerFirework], DELAY)
     }
 
+    prepareForNextRound()
+
+}
+
+function prepareForNextRound(params) {
+    if (currentRound < numberOfRounds) {
+        setTimeout(() => {
+            currentRound++
+            roundSpan.innerText = currentRound
+            show([nextRoundButton])
+        }, DELAY);
+    } else {
+        const userScoreValue = +this.userScore.innerText
+        const computerScoreValue = +this.computerScore.innerText
+
+        if (userScoreValue == computerScoreValue) {
+            countDown.innerText = "Game over. Match Draw!"
+        } else if (userScoreValue > computerScoreValue) {
+            countDown.innerText = "You Won!!!"
+        } else {
+            countDown.innerText = "You Lost :("
+        }
+        show([initButton])
+    }
 }
 
 function updateScore(element) {
@@ -113,7 +149,7 @@ function enable(elements, delay) {
     }, delay?delay:0);
 }
 
-function disable(elements) {
+function disable(elements, delay) {
     setTimeout(() => {
         elements.forEach(element => {
             element.disabled = true
